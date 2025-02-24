@@ -4,32 +4,29 @@ using UnityEngine;
 public class Clock : MonoBehaviour
 
 {
-    // Variável para armazenar a rotação atual do ponteiro
-    private float _rotacaoAtual;
-
-    // Variável para armazenar a hora atual
-    private int _horaAtual;
-
-    // Variável para armazenar o tempo em segundos
-    private float _tempoEmSegundos;
-
-    // Variável para armazenar a velocidade de rotação do ponteiro
-    private float _velocidadeRotacao = 360f / 12f; // 360 graus dividido por 12 horas
-
-    public Transform horas;
+    public Transform ponteiroSegundos; // ReferÃªncia para o transform do ponteiro dos segundos
+    public Transform ponteiroMinutos; // ReferÃªncia para o transform do ponteiro dos segundos
+    public Transform ponteiroHoras; // ReferÃªncia para o transform do ponteiro dos segundos
 
     void Update()
     {
-        // Obter a hora atual
-        _horaAtual = System.DateTime.Now.Hour;
+        // ObtÃ©m o tempo atual do sistema
+        System.DateTime agora = System.DateTime.Now;
 
-        // Calcular a rotação desejada
-        _rotacaoAtual = _horaAtual * _velocidadeRotacao;
+        // Calcula o Ã¢ngulo de rotaÃ§Ã£o com base nos segundos atuais
+        float segundos = agora.Second;
+        float anguloSegundos = segundos * 6f; // 360 graus / 60 segundos = 6 graus por segundo
 
-        // Ajustar a rotação para que o ponteiro comece na posição 12h
-        _rotacaoAtual -= 90f;
+        float minutos = agora.Minute;
+        float anguloMinutos = minutos * 6f; // 360 graus / 60 Minutos = 6 graus por minuto
+        
+        float horas = agora.Hour;
+        float anguloHoras = horas * 30f; // 360 graus / 12 horas = 30 graus por hora
 
-        // Aplicar a rotação ao objeto
-        transform.rotation = Quaternion.Euler(0f, 0f, _rotacaoAtual);
+        // Aplica a rotaÃ§Ã£o aos ponteiro 
+        ponteiroSegundos.rotation = Quaternion.Euler(anguloSegundos, 0f, 0f);
+        ponteiroMinutos.rotation = Quaternion.Euler(anguloMinutos, 0f, 0f);
+        ponteiroHoras.rotation = Quaternion.Euler(anguloHoras, 0f, 0f);
+
     }
 }
